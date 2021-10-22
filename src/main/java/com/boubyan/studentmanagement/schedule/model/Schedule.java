@@ -1,6 +1,7 @@
 package com.boubyan.studentmanagement.schedule.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ public class Schedule extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Column(name="course_day")
 	private String day;
 	private String startTime;
 	private String endTime;

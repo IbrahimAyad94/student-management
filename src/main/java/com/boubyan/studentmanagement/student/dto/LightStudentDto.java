@@ -1,6 +1,5 @@
 package com.boubyan.studentmanagement.student.dto;
 
-import java.util.Date;
 
 import com.boubyan.studentmanagement.common.BaseDto;
 
@@ -9,7 +8,6 @@ public class LightStudentDto extends BaseDto {
 	private String email;
 	private String mobileNumber;
     private String name;
-    private Date birthDate;
 	public String getEmail() {
 		return email;
 	}
@@ -27,12 +25,6 @@ public class LightStudentDto extends BaseDto {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Date getBirthDate() {
-		return birthDate;
-	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
 	}
     
     

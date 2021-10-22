@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,8 +23,7 @@ import com.boubyan.studentmanagement.security.service.AppUserDetailsService;
 
 
 @Configuration
-@EnableWebSecurity
-public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SpringSecurityConfiguration {
 	
 	@Autowired
 	private AppUserDetailsService userDetailsService;
@@ -42,48 +42,95 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	}
 	
 	
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}
 	
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception
-	{
-		return super.authenticationManagerBean();
-	}
 	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http
-		.cors()
-		.and()
-		.csrf().disable()
-		.authorizeRequests()
-		.antMatchers("/api/v1/auth/**").permitAll()
-		.antMatchers("/api/v1/files/**").permitAll()
-		.anyRequest().authenticated()
-		.and()
-		.exceptionHandling()
-		.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-		.and()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
-		http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-	}
+	/*
+	 * @Override public void configure(HttpSecurity http) throws Exception { http
+	 * .cors() .and() .csrf().disable() .authorizeRequests()
+	 * .antMatchers("/api/v1/auth/**").permitAll()
+	 * .antMatchers("/api/v1/files/**").permitAll()
+	 * .antMatchers("/api/v1/**").authenticated() .and() .exceptionHandling()
+	 * .authenticationEntryPoint(jwtAuthenticationEntryPoint) .and()
+	 * .sessionManagement() .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	 * 
+	 * http.addFilterBefore(customJwtAuthenticationFilter,
+	 * UsernamePasswordAuthenticationFilter.class); }
+	 */
 
-	   @Bean
-	    public CorsConfigurationSource corsConfigurationSource() {
-	        CorsConfiguration configuration = new CorsConfiguration();
-	        configuration.setAllowedOrigins(Arrays.asList("*"));
-	        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-	        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-auth-token"));
-	        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();	        
-	        source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
-	        return source;
+	/*
+	 * @Bean public CorsConfigurationSource corsConfigurationSource() {
+	 * CorsConfiguration configuration = new CorsConfiguration();
+	 * configuration.setAllowedOrigins(Arrays.asList("*"));
+	 * configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH",
+	 * "DELETE", "OPTIONS"));
+	 * configuration.setAllowedHeaders(Arrays.asList("Authorization",
+	 * "content-type", "x-auth-token"));
+	 * configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+	 * UrlBasedCorsConfigurationSource source = new
+	 * UrlBasedCorsConfigurationSource(); source.registerCorsConfiguration("/**",
+	 * configuration.applyPermitDefaultValues()); return source; }
+	 */
+	   
+	   
+	   
+	   @Configuration
+	    @Order(1)                                                        
+	    public class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+		   
+		   @Override
+			public void configure(AuthenticationManagerBuilder auth) throws Exception {
+				auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+			}
+			
+			@Bean
+			@Override
+			public AuthenticationManager authenticationManagerBean() throws Exception
+			{
+				return super.authenticationManagerBean();
+			}
+		   
+	        protected void configure(HttpSecurity http) throws Exception {
+	        	http
+                .antMatcher("/api/**")                               
+	    		.cors()
+	    		.and()
+	    		.csrf().disable()
+	    		.authorizeRequests()
+	    		.antMatchers("/api/v1/auth/**").permitAll()
+	    		.antMatchers("/api/v1/files/**").permitAll()
+	    		.antMatchers("/api/v1/**").authenticated()
+	    		.and()
+	    		.exceptionHandling()
+	    		.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+	    		.and()
+	    		.sessionManagement()
+	    		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	    		
+	    		http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	        }
+	    }
+
+	    @Configuration                                                   
+	    public class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+	        @Override
+	        protected void configure(HttpSecurity http) throws Exception {
+	        	http
+	        	.antMatcher("/web/**").cors().and().csrf().disable()                            
+	    		.authorizeRequests()
+	    		.antMatchers("/web/v1/auth/**").permitAll()
+	    		.antMatchers("/web/v1/**").authenticated()
+	    		.and()
+	    		.formLogin() 
+	            .loginPage("/web/v1/auth/login")
+	            .defaultSuccessUrl("/web/v1/home", true)
+	            .permitAll()
+	            .and()
+	            .logout() 
+	            .permitAll()
+	            .and()
+	            .formLogin();	        	
+	        }
 	    }
 
 }

@@ -1,7 +1,6 @@
 package com.boubyan.studentmanagement.student.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ public class Student extends BaseEntity {
 	private String password;
 	private String mobileNumber;
     private String name;
-    private Date birthDate;
+
     
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
         @JoinTable(name = "student_courses",
@@ -65,13 +64,6 @@ public class Student extends BaseEntity {
 		this.name = name;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
 
 	public String getPassword() {
 		return password;

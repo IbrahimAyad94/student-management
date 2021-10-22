@@ -21,6 +21,10 @@ public class StudentDto extends LightStudentDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getPass() {
+		return this.password;
+	}
     
     
 }

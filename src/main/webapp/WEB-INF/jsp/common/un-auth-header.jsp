@@ -8,15 +8,15 @@
 <head>
 <title>Student Management System</title>
 <style><%@include file="/WEB-INF/css/style.css"%></style>
+
+
 </head>
 <body >
     <div class="fixed-header">
         <div class="container">
             <nav>
-             	<a href="${pageContext.request.contextPath}/web/v1/home">Home</a>
-                <a href="${pageContext.request.contextPath}/web/v1/course/view-courses">View Courses</a>
-                <a href="${pageContext.request.contextPath}/web/v1/auth/logout">Logout</a>
-                
+                <a href="${pageContext.request.contextPath}/web/v1/auth/login">Login</a>
+                <a href="${pageContext.request.contextPath}/web/v1/auth/register">Register</a>
             </nav>
         </div>
     </div>

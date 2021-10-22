@@ -61,6 +61,21 @@
         	<artifactId>mapstruct</artifactId>
         	<version>${org.mapstruct.version}</version>
     	</dependency>
+    	
+    	<!-- Jasper reports dependency. -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.15.0</version>
+		</dependency>
+
+
+			<dependency>
+			  <groupId>javax.servlet.jsp</groupId>
+			  <artifactId>jsp-api</artifactId>
+			  <version>2.1</version>
+			  <scope>provided</scope>
+			</dependency>
 
 		<!-- 
 		<dependency>

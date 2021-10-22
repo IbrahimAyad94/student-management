@@ -33,6 +33,12 @@ public class CourseServiceImpl implements CourseService {
 		return courseRepository.getCourseSchedule(id);
 	}
 
+	@Override
+	public List<Course> getUserCoursesByUserId(Long userId) {
+
+		return courseRepository.getUserCoursesByUserId(userId);
+	}
+
 	
 
 }

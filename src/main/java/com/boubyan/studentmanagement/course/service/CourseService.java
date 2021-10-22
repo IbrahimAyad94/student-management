@@ -12,4 +12,7 @@ public interface CourseService {
 	
 	Course getCourseSchedule(Long id);
 	
+	List<Course> getUserCoursesByUserId(Long userId);
+	
+	
 }
