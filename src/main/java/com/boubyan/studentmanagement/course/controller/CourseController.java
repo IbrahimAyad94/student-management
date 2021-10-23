@@ -84,7 +84,7 @@ public class CourseController {
 	
 	
 	@GetMapping("/{id}/download-schedule")
-	public void downloadCourseSchedule(@PathVariable Long id, HttpServletResponse response) throws IOException {
+	public String downloadCourseSchedule(@PathVariable Long id, HttpServletResponse response, Model model) throws IOException {
 		Course course = courseService.getCourseSchedule(id);
 		
 		Map<String, Object> params = new HashMap<>();
@@ -96,7 +96,7 @@ public class CourseController {
 		jasperExporter.exportPdfToFile("C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/course-schedule.jasper",
 				output, params);	
 		
-		 try {
+		/* try {
 		    	
 			 byte[] inFileBytes = Files.readAllBytes(Paths.get(output)); 
 		    	
@@ -115,7 +115,28 @@ public class CourseController {
 		      response.flushBuffer();
 		    } catch (Exception e) {
 		      e.printStackTrace();
-		    }
+		    }*/
+		 
+		 return "redirect:/web/v1/course/preview-course-schedule/" + course.getName();
+		 //return "preview-course-schedule";
+	}
+	
+	
+	@GetMapping("/preview-course-schedule/{name}")
+	public String getData(Model model, @PathVariable String name) throws IOException {
+		
+		String output = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/" + name + "-course-schedule.pdf";
+
+		
+		byte[] inFileBytes = Files.readAllBytes(Paths.get(output)); 
+	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
+	    	
+		model.addAttribute("encodedPDF", encoded);
+
+		
+		model.addAttribute("name", "Toto Nabil");
+		
+		return "preview-course-schedule";
 	}
 	
 }

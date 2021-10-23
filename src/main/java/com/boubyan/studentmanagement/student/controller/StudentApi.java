@@ -20,7 +20,7 @@ import com.boubyan.studentmanagement.student.service.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/student")
-public class StudentController {
+public class StudentApi {
 
 	@Autowired
 	private StudentService studentService;

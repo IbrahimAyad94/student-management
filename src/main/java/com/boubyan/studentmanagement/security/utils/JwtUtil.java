@@ -1,21 +1,17 @@
 package com.boubyan.studentmanagement.security.utils;
 
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.boubyan.studentmanagement.security.model.AppUserDetails;
 import com.boubyan.studentmanagement.student.model.Student;
 import com.boubyan.studentmanagement.student.repository.StudentRepository;
 
@@ -46,69 +42,60 @@ public class JwtUtil {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	public String generateToken(UserDetails userDetails) {
+	@Cacheable(cacheNames = "loggedStudentToken", key = "#userDetails.username")
+	public String generateToken(AppUserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-
-		Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
-
-		if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-			claims.put("isAdmin", true);
-		}
-		if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-			claims.put("isUser", true);
-		}
 		Student student = studentRepository.findByEmail(userDetails.getUsername());
-		claims.put("userId", student.getId() + "");
+		claims.put("userId", student.getId());
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+		return 	Jwts.builder()
+				.setClaims(claims)
+				.setSubject(subject)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
-
+				.signWith(SignatureAlgorithm.HS512, secret)
+				.compact();
 	}
 
 	public boolean validateToken(String authToken) {
 		try {
-			// Jws<Claims> claims = 
-					Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+					Jwts.parser()
+					.setSigningKey(secret)
+					.parseClaimsJws(authToken);
 			return true;
-		} catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-			throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
+		} catch ( SignatureException 
+				| MalformedJwtException 
+				| UnsupportedJwtException 
+				| IllegalArgumentException ex) {
+			
+			throw new BadCredentialsException("INVALID_TOKEN", ex);
 		} catch (ExpiredJwtException ex) {
 			throw ex;
 		}
 	}
 
 	public String getUsernameFromToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		Claims claims = 
+				Jwts.parser()
+				.setSigningKey(secret)
+				.parseClaimsJws(token)
+				.getBody();
 		return claims.getSubject();
 
 	}
-
-	public List<SimpleGrantedAuthority> getRolesFromToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-
-		List<SimpleGrantedAuthority> roles = null;
-
-		Boolean isAdmin = claims.get("isAdmin", Boolean.class);
-		Boolean isUser = claims.get("isUser", Boolean.class);
-
-		if (isAdmin != null && isAdmin) {
-			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		}
-
-		if (isUser != null && isAdmin) {
-			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-		}
-		return roles;
-
+	
+	public Long getStudentIdFromToken(String token) {
+		Claims claims = 
+				Jwts.parser()
+				.setSigningKey(secret)
+				.parseClaimsJws(token)
+				.getBody();
+		return claims.get("userId", Long.class);
 	}
 	
-	public String getUserIdFromToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-		return claims.get("userId", String.class);
-	}
+	
 
 }

@@ -30,35 +30,43 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student save(Student student) {
+		assignCoursesToNewStudent(student);
+		return studentRepository.save(student);
+	}
+
+	private void assignCoursesToNewStudent(Student student) {
 		List<Course> courses = courseService.getAllCourses();
 		if (courses.isEmpty()) {
-			
-			List<Schedule> sc1 = Arrays.asList(
-					new Schedule("Saturday", "8AM", "11AM", null),
-					new Schedule("Friday", "9AM", "1PM", null)
-					);
-			
-			List<Schedule> sc2 = Arrays.asList(
-					new Schedule("Tuesday", "9AM", "11AM", null),
-					new Schedule("Windesday", "10AM", "3PM", null)
-					);
-			
-			List<Schedule> sc3 = Arrays.asList(
-					new Schedule("Firday", "3PM", "5PM", null),
-					new Schedule("Tuesday", "12PM", "5PM", null)
-					);
-			
-			courses = Arrays.asList(
-					new Course("Java", new Date(2021, 10, 23), new Date(2021, 12, 23), sc1),
-					new Course("PHP", new Date(2021, 9, 23), new Date(2021, 12, 23), sc2),
-					new Course("Paython", new Date(2021, 11, 23), new Date(2021, 3, 23), sc3)
-					);
-			student.setCourses(courses);
-
+			createNewCoursesAndAssignItToStudent(student);
 		} else {
 			student.setCourses(courses);
 		}
-		return studentRepository.save(student);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void createNewCoursesAndAssignItToStudent(Student student) {
+		List<Course> courses;
+		List<Schedule> sc1 = Arrays.asList(
+				new Schedule("Saturday", "8AM", "11AM", null),
+				new Schedule("Friday", "9AM", "1PM", null)
+				);
+		
+		List<Schedule> sc2 = Arrays.asList(
+				new Schedule("Tuesday", "9AM", "11AM", null),
+				new Schedule("Windesday", "10AM", "3PM", null)
+				);
+		
+		List<Schedule> sc3 = Arrays.asList(
+				new Schedule("Firday", "3PM", "5PM", null),
+				new Schedule("Tuesday", "12PM", "5PM", null)
+				);
+		
+		courses = Arrays.asList(
+				new Course("Java", new Date(2021, 10, 23), new Date(2021, 12, 23), sc1),
+				new Course("PHP", new Date(2021, 9, 23), new Date(2021, 12, 23), sc2),
+				new Course("Paython", new Date(2021, 11, 23), new Date(2021, 3, 23), sc3)
+				);
+		student.setCourses(courses);
 	}
 
 	@Override
