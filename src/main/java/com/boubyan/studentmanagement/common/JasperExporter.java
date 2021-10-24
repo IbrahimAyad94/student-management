@@ -1,6 +1,7 @@
 package com.boubyan.studentmanagement.common;
 
 
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,10 +29,10 @@ public class JasperExporter {
 	@Autowired
 	private DataSource dataSource;
 
-	public void exportPdfToFile(String templatePath, String pdfPath, Map<String, Object> params) {
+	public void exportPdfToFile(String templatePath, ByteArrayOutputStream ouput, Map<String, Object> params) {
 		JasperPrint print = fillReport(templatePath, params);
 		try {
-			JasperExportManager.exportReportToPdfFile(print, pdfPath);
+			JasperExportManager.exportReportToPdfStream(print, ouput);		    		  
 		} catch (JRException e) {
 			e.printStackTrace();
 		}

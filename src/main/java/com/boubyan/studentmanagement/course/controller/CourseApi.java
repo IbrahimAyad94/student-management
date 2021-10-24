@@ -1,9 +1,8 @@
 package com.boubyan.studentmanagement.course.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +30,7 @@ import com.boubyan.studentmanagement.student.model.Student;
 @RequestMapping("/api/v1/course")
 public class CourseApi {
 
-	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/course-schedule.jasper";
-	private static  String output = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
+	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
 	
 	@Autowired
 	private CourseService courseService;
@@ -74,10 +72,12 @@ public class CourseApi {
 		Map<String, Object> params = new HashMap<>();
 		params.put("courseId", new Long(id));
 		params.put("courseName", course.getName());
-		jasperExporter.exportPdfToFile(jasperPath, output + course.getName() + "-course-schedule.pdf", params);	
 		
-		String filePath = output + course.getName() + "-course-schedule.pdf";
-		byte[] inFileBytes = Files.readAllBytes(Paths.get(filePath)); 
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		
+		jasperExporter.exportPdfToFile(jasperPath +  "course-schedule.jasper", output, params);	
+		
+		byte[] inFileBytes = output.toByteArray();
 	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
 	    
 		return new String(encoded, StandardCharsets.US_ASCII);	
