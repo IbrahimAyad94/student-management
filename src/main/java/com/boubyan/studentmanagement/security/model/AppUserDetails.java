@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.boubyan.studentmanagement.student.model.Student;
 
-
+/**
+ * @author Ibrahim Shehta
+ *
+ */
 public class AppUserDetails implements UserDetails {
 
 	 /**

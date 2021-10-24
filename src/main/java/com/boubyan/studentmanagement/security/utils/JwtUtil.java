@@ -22,7 +22,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-
+/**
+ * @author Ibrahim Shehta
+ *
+ */
 @Service
 public class JwtUtil {
 

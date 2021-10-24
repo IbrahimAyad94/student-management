@@ -14,6 +14,9 @@ import com.boubyan.studentmanagement.student.model.Student;
 import com.boubyan.studentmanagement.student.repository.StudentRepository;
 import com.boubyan.studentmanagement.student.service.StudentService;
 
+/**
+ * @author Ibrahim Shehta
+ */
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -28,6 +31,11 @@ public class StudentServiceImpl implements StudentService {
 		return studentRepository.getById(id);
 	}
 
+	/**
+	 * save student and assign courses to student if there are courses it will assign courses to new student 
+	 * if there are not courses it will create new ones and assign them to to new student 
+	 *
+	 */
 	@Override
 	public Student save(Student student) {
 		assignCoursesToNewStudent(student);

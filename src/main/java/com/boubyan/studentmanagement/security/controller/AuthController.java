@@ -14,6 +14,11 @@ import com.boubyan.studentmanagement.student.dto.StudentDtoMapper;
 import com.boubyan.studentmanagement.student.model.Student;
 import com.boubyan.studentmanagement.student.service.StudentService;
 
+/**
+ * auth controller used with JSP pages 
+ * @author Ibrahim Shehta
+ *
+ */
 @Controller
 @RequestMapping("/web/v1/auth")
 public class AuthController {
@@ -39,12 +44,17 @@ public class AuthController {
 	    return "register";
 	 }
 	 
+	 /**
+	  * Register new student and return login page 
+	  * @param student
+	  * @return
+	  * String
+	  */
 	 @PostMapping("/register")
 	 public String register(@ModelAttribute() StudentDto student) {
 		 		 
+		student.setPassword(bcryptEncoder.encode(student.getPassword()));
 	 	Student studentEntity = studentDtoMapper.mapDtotoEntity(student);
-		
-		studentEntity.setPassword(bcryptEncoder.encode(student.getPass()));
 		
 		studentService.save(studentEntity);
 				 

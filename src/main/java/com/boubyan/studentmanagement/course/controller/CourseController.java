@@ -24,6 +24,11 @@ import com.boubyan.studentmanagement.course.service.CourseService;
 import com.boubyan.studentmanagement.security.utils.SecurityUtil;
 import com.boubyan.studentmanagement.student.model.Student;
 
+
+/**
+ * @author Ibrahim Shehta
+ * Courses Controller handle JSPrequests 
+ */
 @Controller
 @RequestMapping("/web/v1/course")
 public class CourseController {
@@ -41,8 +46,14 @@ public class CourseController {
 	private JasperExporter jasperExporter;
 	
 	
+	/**
+	 * get courses to current logged in user 
+	 * @param model
+	 * @return
+	 * String
+	 */
 	@GetMapping("/view-courses")
-	public String viewCourses(Model model) {
+	public String getLoggedUserCourses(Model model) {
 		Student student = SecurityUtil.getCurrentLoggedUser();
 		
 		List<Course> courses = courseService.getUserCoursesByUserId(student.getId());
@@ -54,6 +65,13 @@ public class CourseController {
 	}
 	
 	
+	/**
+	 * export course schedule as PDF and redirect request to new JSP page that will preview exported PDF
+	 * @param id
+	 * @return
+	 * @throws IOException
+	 * String
+	 */
 	@GetMapping("/{id}/export-schedule")
 	public String exportCourseSchedule(@PathVariable Long id) throws IOException {
 		Course course = courseService.getCourseSchedule(id);
@@ -67,6 +85,14 @@ public class CourseController {
 	}
 	
 	
+	/**
+	 * Preview schedule by course name 
+	 * @param model
+	 * @param name
+	 * @return
+	 * @throws IOException
+	 * String
+	 */
 	@GetMapping("/preview-course-schedule/{name}")
 	public String getData(Model model, @PathVariable String name) throws IOException {
 		

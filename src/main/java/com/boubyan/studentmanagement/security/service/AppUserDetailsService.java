@@ -10,7 +10,11 @@ import com.boubyan.studentmanagement.student.model.Student;
 import com.boubyan.studentmanagement.student.repository.StudentRepository;
 
 
-
+/**
+ * service used by spring security to load logged in user from DB
+ * @author Ibrahim Shehta
+ *
+ */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 

@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boubyan.studentmanagement.common.JasperExporter;
-import com.boubyan.studentmanagement.course.dto.CourseDto;
-import com.boubyan.studentmanagement.course.dto.CourseDtoMapper;
 import com.boubyan.studentmanagement.course.dto.LightCourseDto;
 import com.boubyan.studentmanagement.course.dto.LightCourseDtoMapper;
 import com.boubyan.studentmanagement.course.model.Course;
@@ -25,7 +23,10 @@ import com.boubyan.studentmanagement.course.service.CourseService;
 import com.boubyan.studentmanagement.security.utils.SecurityUtil;
 import com.boubyan.studentmanagement.student.model.Student;
 
-
+/**
+ * @author Ibrahim Shehta
+ * Courses Rest Apis 
+ */
 @RestController
 @RequestMapping("/api/v1/course")
 public class CourseApi {
@@ -40,19 +41,16 @@ public class CourseApi {
 	private LightCourseDtoMapper lightCourseDtoMapper;
 	
 	@Autowired
-	private CourseDtoMapper courseDtoMapper;
-	
-	@Autowired
 	private JasperExporter jasperExporter;
 	
-	@GetMapping
-	public ResponseEntity<List<LightCourseDto>> getAll() {
-		List<Course> courses = courseService.getAllCourses();
-		List<LightCourseDto> coursesDtos = lightCourseDtoMapper.mapEntityListToDtoList(courses);
-		return  ResponseEntity.ok(coursesDtos);
-	}
 	
-	@GetMapping("/student")
+	// apis should documented by apis documentation tools like swagger 
+	/**
+	 * get courses to current logged in user
+	 * @return
+	 * ResponseEntity<List<LightCourseDto>>
+	 */
+	@GetMapping("/view-courses")
 	public ResponseEntity<List<LightCourseDto>> getLoggedUserCourses() {
 		Student student = SecurityUtil.getCurrentLoggedUser();
 
@@ -62,21 +60,13 @@ public class CourseApi {
 	}
 	
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<LightCourseDto> getById(@PathVariable Long id) {
-		Course course = courseService.getById(id);
-		LightCourseDto courseDto = lightCourseDtoMapper.mapEntityToDto(course);
-		return ResponseEntity.ok(courseDto);
-	}
-	
-	@GetMapping("/{id}/schedule")
-	public ResponseEntity<CourseDto> getCourseSchedule(@PathVariable Long id) {
-		Course course = courseService.getCourseSchedule(id);
-		CourseDto courseDto = courseDtoMapper.mapEntityToDto(course);
-		return ResponseEntity.ok(courseDto);
-	}
-	
-	
+	/**
+	 *  export course schedule as pdf and return it Base64 
+	 * @param id
+	 * @return
+	 * @throws IOException
+	 * String
+	 */
 	@GetMapping("/{id}/export-schedule")
 	public String exportCourseSchedule(@PathVariable Long id) throws IOException {
 		Course course = courseService.getCourseSchedule(id);
@@ -90,10 +80,8 @@ public class CourseApi {
 		byte[] inFileBytes = Files.readAllBytes(Paths.get(filePath)); 
 	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
 	    
-		return new String(encoded, StandardCharsets.US_ASCII);		
+		return new String(encoded, StandardCharsets.US_ASCII);	
 	}
-	
-	
 	
 
 }

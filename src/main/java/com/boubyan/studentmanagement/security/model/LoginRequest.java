@@ -1,5 +1,9 @@
 package com.boubyan.studentmanagement.security.model;
 
+/**
+ * @author Ibrahim Shehta
+ *
+ */
 public class LoginRequest {
 
 	private String email;

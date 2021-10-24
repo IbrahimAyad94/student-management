@@ -1,7 +1,11 @@
 package com.boubyan.studentmanagement.security.model;
 
 import com.boubyan.studentmanagement.student.dto.LightStudentDto;
-
+/**
+ * 
+ * @author Ibrahim Shehta
+ *
+ */
 public class LoginResponse {
 
 	private String token;

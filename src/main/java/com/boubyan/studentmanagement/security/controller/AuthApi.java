@@ -25,6 +25,11 @@ import com.boubyan.studentmanagement.student.dto.StudentDtoMapper;
 import com.boubyan.studentmanagement.student.model.Student;
 import com.boubyan.studentmanagement.student.service.StudentService;
 
+/**
+ * auth API use for register and login with REST Apis 
+ * @author Ibrahim Shehta
+ *
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthApi {
@@ -77,10 +82,10 @@ public class AuthApi {
 	public ResponseEntity<LightStudentDto> register(@RequestBody StudentDto student) {
 		
 
+		student.setPassword(bcryptEncoder.encode(student.getPassword()));
+		
 		Student studentEntity = studentDtoMapper.mapDtotoEntity(student);
-		
-		studentEntity.setPassword(bcryptEncoder.encode(student.getPass()));
-		
+				
 		Student savedStudent = studentService.save(studentEntity);
 		
 		LightStudentDto lightStudent = lightStudentDtoMapper.mapEntityToDto(savedStudent);

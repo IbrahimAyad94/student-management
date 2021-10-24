@@ -3,6 +3,7 @@ package com.boubyan.studentmanagement.course.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.boubyan.studentmanagement.course.model.Course;
@@ -34,6 +35,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	@Cacheable(cacheNames = "getUserCoursesByUserId", key = "#userId")
 	public List<Course> getUserCoursesByUserId(Long userId) {
 
 		return courseRepository.getUserCoursesByUserId(userId);

@@ -16,7 +16,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.boubyan.studentmanagement.security.service.AppUserDetailsService;
 
-
+/**
+ * security configuration file 
+ * @author Ibrahim Shehta
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
@@ -37,7 +41,11 @@ public class SpringSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-	   
+	   /**
+	    * spring security configuration with REST Apis 
+	    * @author Ibrahim Shehta
+	    *
+	    */
 	    @Configuration
 	    @Order(1)                                                        
 	    public class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
@@ -75,6 +83,11 @@ public class SpringSecurityConfiguration {
 	        }
 	    }
 
+	    /**
+	     * spring security configuration to state full jsp pages 
+	     * @author Ibrahim Shehta
+	     *
+	     */
 	    @Configuration
 	    @Order(2)
 	    public class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
