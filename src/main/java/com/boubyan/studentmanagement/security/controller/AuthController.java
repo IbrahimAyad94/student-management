@@ -36,8 +36,6 @@ public class AuthController {
 	 
 	 @GetMapping("/register")
 	 public String register() {
-		 
-		 
 	    return "register";
 	 }
 	 
@@ -52,32 +50,5 @@ public class AuthController {
 				 
 	    return "login";
 	 }
-	 
-	 
-	 @GetMapping("/logout")
-	 public String logout() {
-	    return "login";
-	 }
-	 
-
-	 
-		/*
-		 * @PostMapping("/loginRequest") public String
-		 * login(@ModelAttribute("loginRequest") LoginRequest loginRequest) throws
-		 * Exception { System.out.
-		 * println("---------------------------- loing ----------------------------" +
-		 * loginRequest.getEmail());
-		 * 
-		 * try { authenticationManager.authenticate(new
-		 * UsernamePasswordAuthenticationToken( loginRequest.getEmail(),
-		 * loginRequest.getPassword())); } catch (DisabledException e) { throw new
-		 * Exception("USER_DISABLED", e); } catch (BadCredentialsException e) { throw
-		 * new Exception("INVALID_CREDENTIALS", e); }
-		 * 
-		 * 
-		 * return "home"; }
-		 */
-	 
-
 	 
 }

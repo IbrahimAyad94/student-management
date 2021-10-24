@@ -1,13 +1,12 @@
 package com.boubyan.studentmanagement.course.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,9 @@ import com.boubyan.studentmanagement.student.model.Student;
 @RequestMapping("/api/v1/course")
 public class CourseApi {
 
+	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/course-schedule.jasper";
+	private static  String output = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
+	
 	@Autowired
 	private CourseService courseService;
 	
@@ -76,43 +78,19 @@ public class CourseApi {
 	
 	
 	@GetMapping("/{id}/export-schedule")
-	public void exportCourseSchedule(@PathVariable Long id, HttpServletResponse response) throws IOException {
+	public String exportCourseSchedule(@PathVariable Long id) throws IOException {
 		Course course = courseService.getCourseSchedule(id);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("courseId", new Long(id));
 		params.put("courseName", course.getName());
+		jasperExporter.exportPdfToFile(jasperPath, output + course.getName() + "-course-schedule.pdf", params);	
 		
-		String output = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/" + course.getName() + "course-schedule.pdf";
-		
-		jasperExporter.exportPdfToFile("C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/course-schedule.jasper",
-				output, params);
-	
-		
-		
-//		String report = new ClassPathResource("jasper").getPath() + "\\" + "course-schedule.jasper";
-//		String output = new ClassPathResource("jasper").getPath() + "\\" + course.getName() + "course-schedule.pdf";
-//		
-//		jasperExporter.exportPdfToFile(report, output, params);
-	
-		
-//		CourseDto courseDto = courseDtoMapper.mapEntityToDto(course);
-//		return ResponseEntity.ok(courseDto);
-		
-		
-		 try {
-		    	
-		    	byte[] inFileBytes = Files.readAllBytes(Paths.get(output)); 
-		    	byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
-		    	
-		   
-		      response.setContentType("application/pdf");
-		      response.setContentLength(inFileBytes.length);
-		      response.getOutputStream().write(encoded);
-
-		    } catch (Exception e) {
-		      e.printStackTrace();
-		    }
+		String filePath = output + course.getName() + "-course-schedule.pdf";
+		byte[] inFileBytes = Files.readAllBytes(Paths.get(filePath)); 
+	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
+	    
+		return new String(encoded, StandardCharsets.US_ASCII);		
 	}
 	
 	

@@ -19,7 +19,7 @@ th {
 }
 </style>
 
-<h3>Courses View </h3>
+<h3>View Courses </h3>
 
 
 <c:if test="${not empty userCourses}">
@@ -29,16 +29,13 @@ th {
     		<th> Start Date </th>
     		<th> End Date </th>
     		<th> View Schedule </th>
-    		<th> Download Schedule </th>
     	</tr>
         <c:forEach var="course" items="${userCourses}">
             <tr>
                 <td>${course.name}</td>
                 <td><fmt:formatDate value="${course.startDate}" pattern="yyyy-MM-dd" /></td>
                 <td><fmt:formatDate value="${course.endDate}" pattern="yyyy-MM-dd" /></td>                
-                <td> <a href="${pageContext.request.contextPath}/web/v1/course/${course.id}/export-schedule"> View Schedule </a> </td>
-                <td> <a href="${pageContext.request.contextPath}/web/v1/course/${course.id}/download-schedule"> Download Schedule </a> </td>
-
+                <td> <a href="${pageContext.request.contextPath}/web/v1/course/${course.id}/export-schedule"  target="_blacnk"> View Schedule </a> </td>
                 <!-- <td> <button>Download Schedule</button> </td>  -->
             </tr>
         </c:forEach>

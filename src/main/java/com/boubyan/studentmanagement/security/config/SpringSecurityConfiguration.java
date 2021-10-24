@@ -94,7 +94,7 @@ public class SpringSecurityConfiguration {
 	    		.and()
 	    		.formLogin() 
 	            .loginPage("/web/v1/auth/login")
-	            .defaultSuccessUrl("/web/v1/home", true)
+	            .defaultSuccessUrl("/web/v1/course/view-courses", true)
 	            .permitAll()
 	            .and()
 	            .logout() 

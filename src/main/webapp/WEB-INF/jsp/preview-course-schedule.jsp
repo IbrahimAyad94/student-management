@@ -1,36 +1,12 @@
 <%@ include file="common/header.jsp"%>
 
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+<h3>Preview Course Schedule Of ${name}! </h3>
 
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-  background-color: #04AA6D;
-  color: white;
-}
-</style>
-
-<h3>Preview Course Schedule ! </h3>
-
-${name}
+	<object>
+   		<embed id="pdfID" type="text/html" width="800" height="600" 
+   		src="data:application/pdf;base64,${encodedPDF}"/>
+	</object>
 
 
-<%-- <object>
-   <embed id="pdfID" type="text/html" width="1200" height="600" 
-   src="data:application/pdf;base64,${encodedPDF}" />
-</object> --%>
 
-
-<iframe src="data:application/pdf;base64,JVBERi0xLjUKJeLjz9MKNSAwIG9iago8PC9GaWx0ZXIvRmxhdGVEZWNvZGUvTGVuZ3RoIDU1OD4+c3RyZWFtCnicrZVNb9swDIbv+hU8doepor4sH9ut61BgQLYY2GHYoajdrEPTYUmDYf9+lJU4KlBZljMUqIWY1EO+1Cv/ZpcNUxacsNC07Kphn5mEG/8rgqA//99pCc2anX9AQAHNPTt70/z0sccQAXfrOMkKqKziVg2JzieK/vVmxc7e/dptth0s73507e6x8xsKWL2y6bfv9Gz7otI4iTne4uNiDuP8eomw2jLBa4mmAsGdszI8pTJ+a0lo4Qho4K0iWMfufZr0aVGJKAQXBqyrOOUfqtR9lfRC1I42FbqiQRyevu73t3/TdSP8oTc3+za/XB8awZqbvqg1VWf260e2TCaEHijQJ4CtKlqOxfcAWx0Bfj0OMBHBRIgTtTeTxJfWcCmLxV8+326eoXlYj5zPdMd6GIKqxaQhpDQaZ4Q5BEZuDhQ1MPz6P81hv212DtpIbspNcPXUzpyCckcrmGqKFdIKjTPCFAIjNwWKGhh+PWUKkYrE0zVY47ioBxHly/uu2XXbdvbdUWZtHzLcHXra3aEjgM774kgwEWLat8EZjjYjV33xaa7FS+yXbiXD0BEjI1c4tNEBLpNLW8udysiFOEevcqOke8kwdMTI6BUMGJmxTC8nuaMvixyT6+vDU3uSHYvc4kMGO+I0O2IEwAlnWEdnGAvtiP35GhUMxQl+LPBKupcMAyNGRq9wbqMzXKYXfQT762tUL7WYb8cCq6RbyTAwYmTkChaM7PiaXP8ASf6FcgplbmRzdHJlYW0KZW5kb2JqCjEgMCBvYmoKPDwvVGFicy9TL0dyb3VwPDwvUy9UcmFuc3BhcmVuY3kvVHlwZS9Hcm91cC9DUy9EZXZpY2VSR0I+Pi9Db250ZW50cyA1IDAgUi9UeXBlL1BhZ2UvUmVzb3VyY2VzPDwvQ29sb3JTcGFjZTw8L0NTL0RldmljZVJHQj4+L1Byb2NTZXQgWy9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUldL0V4dEdTdGF0ZTw8L0dTMSAzIDAgUi9HUzIgNCAwIFI+Pi9Gb250PDwvRjEgMiAwIFI+Pj4+L1BhcmVudCA2IDAgUi9NZWRpYUJveFswIDAgNTk1IDg0Ml0+PgplbmRvYmoKNyAwIG9iagpbMSAwIFIvWFlaIDAgODUyIDBdCmVuZG9iagoyIDAgb2JqCjw8L1N1YnR5cGUvVHlwZTEvVHlwZS9Gb250L0Jhc2VGb250L0hlbHZldGljYS9FbmNvZGluZy9XaW5BbnNpRW5jb2Rpbmc+PgplbmRvYmoKMyAwIG9iago8PC9jYSAwLjk2MDc4Pj4KZW5kb2JqCjQgMCBvYmoKPDwvY2EgMT4+CmVuZG9iago2IDAgb2JqCjw8L0tpZHNbMSAwIFJdL1R5cGUvUGFnZXMvQ291bnQgMS9JVFhUKDIuMS43KT4+CmVuZG9iago4IDAgb2JqCjw8L05hbWVzWyhKUl9QQUdFX0FOQ0hPUl8wXzEpIDcgMCBSXT4+CmVuZG9iago5IDAgb2JqCjw8L0Rlc3RzIDggMCBSPj4KZW5kb2JqCjEwIDAgb2JqCjw8L05hbWVzIDkgMCBSL1R5cGUvQ2F0YWxvZy9QYWdlcyA2IDAgUi9WaWV3ZXJQcmVmZXJlbmNlczw8L1ByaW50U2NhbGluZy9BcHBEZWZhdWx0Pj4+PgplbmRvYmoKMTEgMCBvYmoKPDwvTW9kRGF0ZShEOjIwMjExMDIzMjI0ODIxKzAyJzAwJykvQ3JlYXRvcihKYXNwZXJSZXBvcnRzIExpYnJhcnkgdmVyc2lvbiA2LjE1LjAtZGQ0OWJmYjk0OTE4MzM2YjgzMjFkNTU"
-
-></iframe>
 <%@ include file="common/footer.jsp"%>

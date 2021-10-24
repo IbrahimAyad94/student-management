@@ -13,10 +13,7 @@
     <div class="fixed-header">
         <div class="container">
             <nav>
-             	<a href="${pageContext.request.contextPath}/web/v1/home">Home</a>
-                <a href="${pageContext.request.contextPath}/web/v1/course/view-courses">View Courses</a>
-                <a href="${pageContext.request.contextPath}/web/v1/auth/logout">Logout</a>
-                
+                <a href="${pageContext.request.contextPath}/web/v1/course/view-courses">View Courses</a>                
             </nav>
         </div>
     </div>

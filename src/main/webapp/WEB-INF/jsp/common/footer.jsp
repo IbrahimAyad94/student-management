@@ -1,6 +1,6 @@
 </div>
 <div class="fixed-footer">
-        <div class="container">Copyright &copy; 2016 Your Company</div>        
+        <div class="container">Copyright &copy; 2021  Ibrahim </div>        
     </div>
 </body>
 </html>
