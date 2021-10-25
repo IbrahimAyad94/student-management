@@ -9,6 +9,8 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,6 @@ import com.boubyan.studentmanagement.student.model.Student;
 @RequestMapping("/pages/course")
 public class CourseController {
 
-	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
-
 	@Autowired
 	private CourseService courseService;
 	
@@ -44,6 +44,8 @@ public class CourseController {
 	@Autowired
 	private JasperExporter jasperExporter;
 	
+	@Autowired
+    ResourceLoader resourceLoader;
 	
 	/**
 	 * get courses to current logged in user 
@@ -80,7 +82,13 @@ public class CourseController {
 		params.put("courseName", course.getName());
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		jasperExporter.exportToPDF(jasperPath +  "course-schedule.jasper", output, params);	
+		
+		Resource resource = resourceLoader.getResource("classpath:jasper/course-schedule.jasper");
+		String jasperTemplatePath = resource.getFile().getAbsolutePath();
+		System.out.println(jasperTemplatePath);
+		
+		
+		jasperExporter.exportToPDF(jasperTemplatePath, output, params);	
 		
 		byte[] ouputBytes = output.toByteArray();
 	    byte[] encodedBytes = java.util.Base64.getEncoder().encode(ouputBytes);

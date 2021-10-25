@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +31,6 @@ import com.boubyan.studentmanagement.student.model.Student;
 @RestController
 @RequestMapping("/api/v1/course")
 public class CourseApi {
-
-	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
 	
 	@Autowired
 	private CourseService courseService;
@@ -41,6 +41,8 @@ public class CourseApi {
 	@Autowired
 	private JasperExporter jasperExporter;
 	
+	@Autowired
+    ResourceLoader resourceLoader;
 	
 	// apis should documented by apis documentation tools like swagger 
 	/**
@@ -75,7 +77,10 @@ public class CourseApi {
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		
-		jasperExporter.exportToPDF(jasperPath +  "course-schedule.jasper", output, params);	
+		Resource resource = resourceLoader.getResource("classpath:jasper/course-schedule.jasper");
+		String jasperTemplatePath = resource.getFile().getAbsolutePath();
+		
+		jasperExporter.exportToPDF(jasperTemplatePath, output, params);	
 		
 		byte[] inFileBytes = output.toByteArray();
 	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
