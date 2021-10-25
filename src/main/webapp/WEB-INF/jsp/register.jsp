@@ -5,13 +5,13 @@
 
 <h3> Register Form </h3>
 <form name="register" action="register" method="post">
-	Email:<input type="email" name="email" /><br />
+	<label>Email:</label> <input type="email" name="email" required="true" /><br />
 	<br /> 
-	Password:<input type="password" name="password" /><br />
+	<label>Password:</label> <input type="password" name="password" required="true" /><br />
 	<br /> 
-	Mobile:<input type="text" name="mobileNumber" /><br />
+	<label>Mobile:</label> <input type="text" name="mobileNumber" required="true" /><br />
 	<br /> 
-	Name:<input type="text" name="name" /><br />
+	<label>Name:</label> <input type="text" name="name" required="true" /><br />
 	<br /> 
 	<input type="submit" value="Register" />
 </form>

@@ -100,14 +100,14 @@ public class SpringSecurityConfiguration {
 	        @Override
 	        protected void configure(HttpSecurity http) throws Exception {
 	        	http
-	        	.antMatcher("/web/**").cors().and().csrf().disable()                            
+	        	.antMatcher("/**").cors().and().csrf().disable()                            
 	    		.authorizeRequests()
-	    		.antMatchers("/web/v1/auth/**").permitAll()
-	    		.antMatchers("/web/v1/**").authenticated()
+	    		.antMatchers("/login", "/register").permitAll()
+	    		.antMatchers("/pages/**").authenticated()
 	    		.and()
 	    		.formLogin() 
-	            .loginPage("/web/v1/auth/login")
-	            .defaultSuccessUrl("/web/v1/course/view-courses", true)
+	            .loginPage("/login")
+	            .defaultSuccessUrl("/pages/course/view-courses", true)
 	            .permitAll()
 	            .and()
 	            .logout() 

@@ -29,7 +29,7 @@ public class JasperExporter {
 	@Autowired
 	private DataSource dataSource;
 
-	public void exportPdfToFile(String templatePath, ByteArrayOutputStream ouput, Map<String, Object> params) {
+	public void exportToPDF(String templatePath, ByteArrayOutputStream ouput, Map<String, Object> params) {
 		JasperPrint print = fillReport(templatePath, params);
 		try {
 			JasperExportManager.exportReportToPdfStream(print, ouput);		    		  

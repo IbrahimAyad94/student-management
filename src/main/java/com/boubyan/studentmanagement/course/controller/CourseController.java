@@ -30,7 +30,7 @@ import com.boubyan.studentmanagement.student.model.Student;
  * Courses Controller handle JSPrequests 
  */
 @Controller
-@RequestMapping("/web/v1/course")
+@RequestMapping("/pages/course")
 public class CourseController {
 
 	private static String jasperPath = "C:/Users/pc/Documents/Task/student-management/student-management/src/main/resources/jasper/";
@@ -80,7 +80,7 @@ public class CourseController {
 		params.put("courseName", course.getName());
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		jasperExporter.exportPdfToFile(jasperPath +  "course-schedule.jasper", output, params);	
+		jasperExporter.exportToPDF(jasperPath +  "course-schedule.jasper", output, params);	
 		
 		byte[] ouputBytes = output.toByteArray();
 	    byte[] encodedBytes = java.util.Base64.getEncoder().encode(ouputBytes);

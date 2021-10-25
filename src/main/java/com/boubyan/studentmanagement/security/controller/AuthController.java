@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import com.boubyan.studentmanagement.student.dto.StudentDto;
@@ -20,7 +19,6 @@ import com.boubyan.studentmanagement.student.service.StudentService;
  *
  */
 @Controller
-@RequestMapping("/web/v1/auth")
 public class AuthController {
 
 	

@@ -18,7 +18,7 @@ public class IndexController {
 	 */
 	@GetMapping()
 	 public String index() {		
-	    return "redirect:/web/v1/course/view-courses";
+	    return "redirect:/pages/course/view-courses";
 	 }
 	
 }

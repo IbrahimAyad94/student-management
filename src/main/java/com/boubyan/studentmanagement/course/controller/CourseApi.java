@@ -75,7 +75,7 @@ public class CourseApi {
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		
-		jasperExporter.exportPdfToFile(jasperPath +  "course-schedule.jasper", output, params);	
+		jasperExporter.exportToPDF(jasperPath +  "course-schedule.jasper", output, params);	
 		
 		byte[] inFileBytes = output.toByteArray();
 	    byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);

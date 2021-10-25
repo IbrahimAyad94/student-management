@@ -13,7 +13,12 @@
     <div class="fixed-header">
         <div class="container">
             <nav>
-                <a href="${pageContext.request.contextPath}/web/v1/course/view-courses">View Courses</a>                
+                <a href="${pageContext.request.contextPath}/pages/course/view-courses">View Courses</a>           
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>           
+
+             	<span class="logged-name"> welcome: ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.student.name}</span>
+             
+             
             </nav>
         </div>
     </div>

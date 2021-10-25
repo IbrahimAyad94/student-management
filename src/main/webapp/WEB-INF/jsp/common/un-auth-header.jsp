@@ -15,8 +15,8 @@
     <div class="fixed-header">
         <div class="container">
             <nav>
-                <a href="${pageContext.request.contextPath}/web/v1/auth/login">Login</a>
-                <a href="${pageContext.request.contextPath}/web/v1/auth/register">Register</a>
+                <a href="${pageContext.request.contextPath}/login">Login</a>
+                <a href="${pageContext.request.contextPath}/register">Register</a>
             </nav>
         </div>
     </div>
