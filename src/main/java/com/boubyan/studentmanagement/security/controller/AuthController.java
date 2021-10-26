@@ -1,5 +1,7 @@
 package com.boubyan.studentmanagement.security.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -49,8 +51,9 @@ public class AuthController {
 	  * String
 	  */
 	 @PostMapping("/register")
-	 public String register(@ModelAttribute() StudentDto student) {
+	 public String register(@ModelAttribute() StudentDto student, HttpServletRequest req) {
 		 		 
+	req.getServletContext().setSessionTimeout(1);
 		student.setPassword(bcryptEncoder.encode(student.getPassword()));
 	 	Student studentEntity = studentDtoMapper.mapDtotoEntity(student);
 		
