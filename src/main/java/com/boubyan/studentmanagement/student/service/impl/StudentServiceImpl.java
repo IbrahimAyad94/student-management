@@ -56,17 +56,17 @@ public class StudentServiceImpl implements StudentService {
 		List<Course> courses;
 		List<Schedule> sc1 = Arrays.asList(
 				new Schedule("Saturday", "8AM", "11AM", null),
-				new Schedule("Friday", "9AM", "1PM", null)
+				new Schedule("Sunday", "9AM", "1PM", null)
 				);
 		
 		List<Schedule> sc2 = Arrays.asList(
-				new Schedule("Tuesday", "9AM", "11AM", null),
-				new Schedule("Windesday", "10AM", "3PM", null)
+				new Schedule("Monday", "9AM", "11AM", null),
+				new Schedule("Tuesday", "10AM", "3PM", null)
 				);
 		
 		List<Schedule> sc3 = Arrays.asList(
-				new Schedule("Firday", "3PM", "5PM", null),
-				new Schedule("Tuesday", "12PM", "5PM", null)
+				new Schedule("Wednesday", "3PM", "5PM", null),
+				new Schedule("Thursday", "12PM", "5PM", null)
 				);
 		
 		courses = Arrays.asList(
