@@ -9,9 +9,7 @@ public interface CourseService {
 	Course getById(Long id);
 	
 	List<Course> getAllCourses();
-	
-	Course getCourseSchedule(Long id);
-	
+		
 	List<Course> getUserCoursesByUserId(Long userId);
 	
 	

@@ -11,9 +11,6 @@ import com.boubyan.studentmanagement.course.model.Course;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-	@Query("select c from Course c join fetch c.schedule cs where c.id = :id")
-	Course getCourseSchedule(Long id);
-
 	@Query("select c from Course c join fetch c.sudents s where s.id = :id")
 	List<Course> getUserCoursesByUserId(Long id);
 	

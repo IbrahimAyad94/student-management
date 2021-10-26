@@ -26,11 +26,6 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private CourseService courseService;
 	
-	@Override
-	public Student findStudentById(Long id) {
-		return studentRepository.getById(id);
-	}
-
 	/**
 	 * save student and assign courses to student if there are courses it will assign courses to new student 
 	 * if there are not courses it will create new ones and assign them to to new student 
@@ -77,13 +72,4 @@ public class StudentServiceImpl implements StudentService {
 		student.setCourses(courses);
 	}
 
-	@Override
-	public Student findByEmail(String username) {
-		return studentRepository.findByEmail(username);
-	}
-
-	@Override
-	public Student getStudentCourses(Long id) {
-		return studentRepository.getStudentCourses(id);
-	}
 }

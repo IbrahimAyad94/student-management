@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +26,15 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 
+	
+	@Value("${token.header}")
+	private String tokenHader;
+	
+	@Value("${token.prefix}")
+	private String tokenPrefix ;
+	
 	@Autowired
-	private JwtUtil jwtTokenUtil;
+	private JwtUtil jwtUtil;
 
 	@Autowired
 	private AppUserDetailsService  userDetailsService;
@@ -36,13 +44,12 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		 try{
-			// JWT Token is in the form "Bearer token". Remove Bearer word and
-			// get  only the Token
+
 			String jwtToken = extractJwtFromRequest(request);
 
-			if (StringUtils.hasText(jwtToken) && jwtTokenUtil.validateToken(jwtToken)) {
+			if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
 				
-				AppUserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(jwtToken));
+				AppUserDetails userDetails = userDetailsService.loadUserByUsername(jwtUtil.getUsernameFromToken(jwtToken));
 
 				if (userDetails.isTokenExpired()) {
 					response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
@@ -53,14 +60,9 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-				// After setting the Authentication in the context, we specify
-				// that the current user is authenticated. So it passes the
-				// Spring Security Configurations successfully.
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-			} else {
-				//System.out.println("Cannot set the Security Context");
-			}
-		 }catch(ExpiredJwtException ex)
+			} 
+		 } catch(ExpiredJwtException ex)
 		 {
 			 request.setAttribute("exception", ex);
 		 }
@@ -72,8 +74,8 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private String extractJwtFromRequest(HttpServletRequest request) {
-		String bearerToken = request.getHeader("Authorization");
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+		String bearerToken = request.getHeader(tokenHader);
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(tokenPrefix)) {
 			return bearerToken.substring(7, bearerToken.length());
 		}
 		return null;

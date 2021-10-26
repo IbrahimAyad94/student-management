@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.boubyan.studentmanagement.security.model.AppUserDetails;
 import com.boubyan.studentmanagement.student.model.Student;
@@ -26,21 +26,14 @@ import io.jsonwebtoken.UnsupportedJwtException;
  * @author Ibrahim Shehta
  *
  */
-@Service
+@Component
 public class JwtUtil {
 
-	private String secret;
-	private int jwtExpirationInMs;
-
 	@Value("${jwt.secret}")
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
-
+	private String secret;
+	
 	@Value("${jwt.expirationDateInMs}")
-	public void setJwtExpirationInMs(int jwtExpirationInMs) {
-		this.jwtExpirationInMs = jwtExpirationInMs;
-	}
+	private int jwtExpirationInMs;
 	
 	@Autowired
 	private StudentRepository studentRepository;

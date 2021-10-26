@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boubyan.studentmanagement.common.JasperExporter;
 import com.boubyan.studentmanagement.course.dto.LightCourseDto;
@@ -74,8 +73,8 @@ public class CourseController {
 	 * String
 	 */
 	@GetMapping("/{id}/export-schedule")
-	public String exportCourseSchedule(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) throws IOException {
-		Course course = courseService.getCourseSchedule(id);
+	public String exportCourseSchedule(@PathVariable Long id, Model model) throws IOException {
+		Course course = courseService.getById(id);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("courseId", new Long(id));

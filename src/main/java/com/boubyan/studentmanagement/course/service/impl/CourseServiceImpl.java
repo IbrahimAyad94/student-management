@@ -28,11 +28,6 @@ public class CourseServiceImpl implements CourseService {
 		return courseRepository.findAll();
 	}
 
-	@Override
-	public Course getCourseSchedule(Long id) {
-		// TODO Auto-generated method stub
-		return courseRepository.getCourseSchedule(id);
-	}
 
 	@Override
 	@Cacheable(cacheNames = "getUserCoursesByUserId", key = "#userId")

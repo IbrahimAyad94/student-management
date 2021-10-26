@@ -69,7 +69,7 @@ public class CourseApi {
 	 */
 	@GetMapping("/{id}/export-schedule")
 	public String exportCourseSchedule(@PathVariable Long id) throws IOException {
-		Course course = courseService.getCourseSchedule(id);
+		Course course = courseService.getById(id);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("courseId", new Long(id));
