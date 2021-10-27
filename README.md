@@ -1,3 +1,27 @@
+# This repo contains the source code to Interview Assessment 
+Overview:
+Building a student management system where users can register, login, view courses
+ Exercise 
+•	Write APIs :
+o	Register
+o	Login
+o	View courses 
+o	Export course schedule as pdf
+	The pdf returned as base64 .
+•	JSP  pages for :
+o	Register
+o	Login
+o	View courses 
+o	Export course schedule as pdf
+	>>UI design is not required.
+•	Using JWT token for authentication
+•	JWT token lifetime is 5 minutes
+•	Session timeout is 10 minutes
+•	JWT token must be stored on cache (use any caching server like redis available) 
+•	DB : postgress or redis W
+•	Technical Documentation 
+
+
 # student-management 
   student management system where users can register, login, view courses
 
